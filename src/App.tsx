@@ -1,24 +1,20 @@
 import React from 'react';
-import logo from './logo.svg';
+import SingIn from './pages/SingIn';
+import {Container, Stack, TextField, Button} from '@mui/material';
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <SingIn />
+      <Container maxWidth="xs">
+        <Stack spacing={4}>
+          <h1>Sign In</h1>
+          <TextField variant="outlined" label="Usuário" />
+          <TextField variant="outlined" label="Senha" />
+          <Button variant="contained">Login</Button>
+        </Stack>
+      </Container>
     </div>
   );
 }
