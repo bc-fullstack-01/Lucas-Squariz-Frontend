@@ -1,10 +1,21 @@
 import React from 'react';
-import AuthForm  from '../../components/AuthForm';
+import { useNavigate } from 'react-router-dom';
+import server from '../../api/server';
+import AuthForm from '../../components/AuthForm';
 
 export default function Signup() {
-
-  const handleRegister = async () => {
-
+  const navigate = useNavigate();
+  const handleRegister = async (user: string, password: string) => {
+    try {
+      await server.post('/security/register', {
+        user,
+        password
+      });
+      
+      navigate('/')
+    } catch (error) {
+      console.log(error);
+    }
   }
   return (
     <AuthForm

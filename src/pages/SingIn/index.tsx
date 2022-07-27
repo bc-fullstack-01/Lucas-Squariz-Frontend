@@ -12,16 +12,21 @@ interface TokenUser {
 const SingIn = () => {
     const navigate = useNavigate();
     const handleLogin = async (user: string, password: string) => {
-        const response = await server.post('/security/login', {
-            user,
-            password,
-        });
-        const { accessToken } = (response.data);
-        localStorage.setItem('accessToken', accessToken);
-        const decoded = jwt_decode(accessToken) as TokenUser;
-        localStorage.setItem('user', decoded.user);
-        localStorage.setItem('profile', decoded.profile);
-        navigate('/');
+        try {
+            const response = await server.post('/security/login', {
+                user,
+                password,
+            });
+            const { accessToken } = (response.data);
+            localStorage.setItem('accessToken', accessToken);
+            const decoded = jwt_decode(accessToken) as TokenUser;
+            localStorage.setItem('user', decoded.user);
+            localStorage.setItem('profile', decoded.profile);
+            navigate('/');
+        } catch (error) {
+            console.log(error)
+        }
+
     }
 
     return (
@@ -29,7 +34,7 @@ const SingIn = () => {
             onSubmitForm={handleLogin}
             onSubmitButtonText="Login"
             LinkText="Não tem um conta? faça seu cadastro"
-            LinkRoute="/singup" 
+            LinkRoute="/singup"
         />
     )
 };
