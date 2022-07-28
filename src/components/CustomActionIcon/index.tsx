@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Typography, IconButton } from "@mui/material";
-import { ChatBubbleOutline as ChatBubbleOutlineIcon, FavoriteBorder as FavoriteBorderIcon, Favorite as FavoriteIcon } from '@mui/icons-material';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import server from '../../api/server';
 import CustomFavoriteIcon from '../CustomfavoriteIcon';
+import CustomChatBubbleIcon from '../CustomChatBubbleIcon';
+
 
 interface Props {
     commentCount: number;
@@ -25,13 +26,19 @@ const CustomActionIcon = ({ commentCount, likeCount, likes, postId }: Props) => 
     const handleLike = async () => {
         try {
             if (!liked) {
-                server.post(`/post/${postId}/like`, null, {
+                await server.post(`/post/${postId}/like`, null, {
                     headers: {
                         authorization: `Bearer ${token}`,
                     }
                 });
                 setLiked(true);
             } else {
+                await server.post(`/post/${postId}/unlike`, null, {
+                    headers: {
+                        authorization: `Bearer ${token}`,
+                    }
+                });
+
                 setLiked(false);
             }
 
@@ -42,14 +49,8 @@ const CustomActionIcon = ({ commentCount, likeCount, likes, postId }: Props) => 
 
     return (
         <div>
-            <IconButton>
-                <ChatBubbleOutlineIcon fontSize='small' />
-            </IconButton>
-            <Typography variant="caption" color="text.secondary">
-                {commentCount}
-            </Typography>
-                <CustomFavoriteIcon handleLike={handleLike} likeCount={likeCount} liked={liked} />
-            
+            <CustomChatBubbleIcon commentCount={commentCount} />
+            <CustomFavoriteIcon handleLike={handleLike} likeCount={likeCount} liked={liked} />
         </div >
 
     )
