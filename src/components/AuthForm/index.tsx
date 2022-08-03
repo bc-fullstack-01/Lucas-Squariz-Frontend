@@ -34,7 +34,7 @@ const AuthForm = ({onSubmitForm, onSubmitButtonText, LinkText, LinkRoute}:Props)
                         spacing={6}>
                         <TextField variant="outlined" label="Usuário" name="user" value={user.value} onChange={(e) => setUser({ value: e.target.value, error: '' })} />
                         <TextField type="password" variant="outlined" label="Senha" name="user" value={password.value} onChange={(e) => setPassword({ value: e.target.value, error: '' })} />
-                        <Button variant="contained">{onSubmitButtonText}</Button>
+                        <Button variant="contained" type="submit">{onSubmitButtonText}</Button>
                         <Link to={LinkRoute}>{LinkText}</Link>
                     </Stack>
                 </Stack>
